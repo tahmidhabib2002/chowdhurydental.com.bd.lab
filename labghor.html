@@ -1267,7 +1267,8 @@
             query,
             where,
             orderBy,
-            serverTimestamp 
+            serverTimestamp,
+            deleteDoc
         } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         // Firebase Configuration
@@ -1275,7 +1276,7 @@
             apiKey: "AIzaSyAxz46ug-CAywevI-PzmOp7ba5iiCK9dfM",
             authDomain: "plasma-raceway-465016-v0.firebaseapp.com",
             projectId: "plasma-raceway-465016-v0",
-            storageBucket: "plasma-raceway-465016-v0.firebasestorage.app",
+            storageBucket: "plasma-raceway-465016-v0.appspot.com",
             messagingSenderId: "23620370976",
             appId: "1:23620370976:web:3bb119ceb9e15608a33245"
         };
@@ -1285,23 +1286,16 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Authentication Check (COMMENT OUT FOR TESTING)
-        /*
+        // Authentication Check
         onAuthStateChanged(auth, (user) => {
             if (!user) {
-                window.location.href = "index.html"; // Login page
+                window.location.href = "log.html"; // Login page
             } else {
                 loadLabsData();
                 loadLabHistory();
                 loadPaymentHistory();
             }
         });
-        */
-       
-       // For testing without login
-       loadLabsData();
-       loadLabHistory();
-       loadPaymentHistory();
 
         // UI Elements
         const sidebar = document.getElementById('sidebar');
@@ -2097,7 +2091,6 @@
         // View Lab Details
         window.viewLabDetails = function(labId) {
             navigateToSection('lab-history', 'ল্যাব হিস্ট্রি');
-            // Here you could filter by lab if needed
         };
 
         // Modal Controls
@@ -2159,7 +2152,7 @@
         // Logout
         document.getElementById('logoutBtn')?.addEventListener('click', () => {
             signOut(auth).then(() => {
-                window.location.href = "index.html";
+                window.location.href = "log.html";
             }).catch((error) => {
                 console.error("Logout error:", error);
             });
